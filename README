@@ -1,0 +1,9 @@
+Author: Federico Vaga <federico.vaga@gmail.com>
+Last Update: 2013-03-14
+
+This is a very simple library for the Linux's uinput char device.
+The library is not tested at the moment. I will provide some demo programs
+
+= = = = ChangeLog = = = =
+- - libuinput 0.1 - -
+ * Create the first draft of the library
