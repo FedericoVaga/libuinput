@@ -1,0 +1,6 @@
+*.a
+*.o
+.*
+*~
+*.i
+demo/keyboard_demo
