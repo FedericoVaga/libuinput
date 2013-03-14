@@ -2,8 +2,14 @@ Author: Federico Vaga <federico.vaga@gmail.com>
 Last Update: 2013-03-14
 
 This is a very simple library for the Linux's uinput char device.
-The library is not tested at the moment. I will provide some demo programs
 
-= = = = ChangeLog = = = =
+I found others libraries for uinput but I do not like them because of their
+java oriented solution. I think that a library must be simple to use, easy
+to understand and hide some complexity. The uinput interface is pretty simple,
+so this library does not simplify nothing; the aim of this library is to hide
+the ioctl() interface to the user of this library and provide some common
+functions.
+
+= = = = Change Log = = = =
 - - libuinput 0.1 - -
  * Create the first draft of the library
