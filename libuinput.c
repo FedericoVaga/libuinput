@@ -180,13 +180,27 @@ int uinput_send_event(struct uinput_tkn *tkn, struct input_event *ev) {
  * It sends a list of events to the device
  */
 int uinput_send_events(struct uinput_tkn *tkn, struct input_event *event,
-		unsigned int n) {
+		       unsigned int n, int do_sync) {
 	int i, err = 0;
+	struct input_event ev = {{0, 0}, EV_SYN, SYN_REPORT, 0};
 
 	for (i = 0; i < n; ++i) {
 		err = uinput_send_event(tkn, &event[i]);
-		if (err)
-			break;
+		if (err) {
+		  fprintf(stderr, "Cannot send event, err %d: %s\n",
+			  errno, strerror(errno));
+		  break;
+		}
+	}
+
+	if (!do_sync) /* Skip syncronization */
+	    return err;
+
+	/* Do Synchronization */
+	err = uinput_send_event(tkn, &ev);
+	if (err) {
+	    fprintf(stderr, "Cannot sync event, err %d: %s\n",
+		    errno, strerror(errno));
 	}
 
 	return err;

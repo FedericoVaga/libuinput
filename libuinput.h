@@ -102,7 +102,7 @@ extern int uinput_send_event(struct uinput_tkn *tkn, struct input_event *event);
  * It sends a list of events to the device
  */
 int uinput_send_events(struct uinput_tkn *tkn, struct input_event *event,
-		unsigned int n);
+		unsigned int n, int do_sync);
 
 
 #ifdef UINPUT_INTERNAL
