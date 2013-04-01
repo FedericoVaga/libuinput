@@ -69,8 +69,11 @@ int main(int argc, char *argv[]) {
 
 	/* Create uinput device */
 	err = uinput_create_new_device(tkn, &uudev);
+	printf("input%d virtual device created. Read events from %s\n\n",
+		uinput_get_input_no(tkn), uinput_get_event_path(tkn));
+
 	printf("To dump events on this device, run the command:"
-	       "\nxinput test \"libuinput-keyboard-demo\"\n");
+	       "\nxinput test \"libuinput-keyboard-demo\"\n\n");
 
 	printf("Send some events in 10 seconds. We are trying to write \"qwerty\", but "
 	       "you should see the word \"qwery\" on your command line because "

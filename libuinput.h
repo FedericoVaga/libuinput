@@ -6,7 +6,7 @@
 #ifndef UINPUT_H
 #define UINPUT_H
 
-#define LIBUINPUT_VERSION 0.1
+#define LIBUINPUT_VERSION 0.2
 
 /*
  * uinput_tkn
@@ -105,11 +105,39 @@ int uinput_send_events(struct uinput_tkn *tkn, struct input_event *event,
 		unsigned int n, int do_sync);
 
 
+/*
+ * uinput_get_event_no
+ * @tkn: the library token created by uinput_open
+ *
+ * It returns the event number associated to the uinput device
+ */
+extern int uinput_get_input_no(struct uinput_tkn *tkn);
+
+/*
+ * uinput_get_event_no
+ * @tkn: the library token created by uinput_open
+ *
+ * It returns the event number associated to the uinput device
+ */
+extern int uinput_get_event_no(struct uinput_tkn *tkn);
+
+/*
+ * uinput_get_event_path
+ * @tkn: the library token created by uinput_open
+ *
+ * It returns the string of the char device event associated to the uinput
+ * device
+ */
+extern char *uinput_get_event_path(struct uinput_tkn *tkn);
+
 #ifdef UINPUT_INTERNAL
 /* Here are define private structures used within the library */
 
 struct uinput_token {
 	int fd;
+	int input_no;
+	int event_no; /* XX number of event /dev/input/eventXX char device */
+	char event_dev_path[128]; /* path to /dev/input/eventXX char device */
 	struct uinput_user_dev *dev;
 };
 #endif /* UINPUT_INTERNAL */
