@@ -1,6 +1,8 @@
-/*
- *  Copyright © 2013 Federico Vaga <federico.vaga@gmail.com>
- *  License: GPLv2
+/**
+ *  @author Federico Vaga <federico.vaga@ gmail.com>
+ *  @date 2013
+ *  @copyright © 2013 Federico Vaga <federico.vaga@ gmail.com>, License: GPLv2
+ *  @version 0.2
  */
 
 #include <errno.h>
@@ -15,13 +17,6 @@
 #define UINPUT_INTERNAL 1
 #include "libuinput.h"
 
-/*
- * uinput_open
- * @path: path to the uinput device. If NULL, the default is /dev/uinput
- *
- * It opens the uinput device.
- * It returns an uinput token to use for all operation on uinput
- */
 struct uinput_tkn *uinput_open(char *path) {
 	struct uinput_token *tkn;
 
@@ -37,12 +32,7 @@ struct uinput_tkn *uinput_open(char *path) {
 	return (void *) tkn;
 }
 
-/*
- * uinput_close
- * @tkn: the library token created by uinput_open
- *
- * It closes the uinput device
- */
+
 void uinput_close(struct uinput_tkn *tkn) {
 	struct uinput_token *t = (void *) tkn;
 
@@ -51,9 +41,10 @@ void uinput_close(struct uinput_tkn *tkn) {
 }
 
 
-/*
- * flush_kmsg
- * @fd: file descriptor of kmsg char device
+/**
+ * It flushes the buffer of a kmsg file descriptor.
+ *
+ * @param[in] fd is file descriptor of kmsg char device
  */
 static void flush_kmsg(int fd)
 {
@@ -74,12 +65,11 @@ static void flush_kmsg(int fd)
 }
 
 
-/*
- * uinput_get_event
- * @t: internal uinput token
- *
+/**
  * It set the path to the event char device associated to the created uinput
  * device.
+ *
+ * @param t is internal uinput token
  */
 static void uinput_get_event(int fd, struct uinput_token *t)
 {
@@ -137,15 +127,6 @@ static void uinput_get_event(int fd, struct uinput_token *t)
 }
 
 
-/*
- * uinput_create_new_device
- * @tkn: the library token created by uinput_open
- * @dev: description of the new input device to create
- *
- * It creates a new uinput device based on the information within the data
- * structure uinput_user_dev. Remember, you must set the list of supported
- * events before create a new device.
- */
 int uinput_create_new_device(struct uinput_tkn *tkn,
 		struct uinput_user_dev *dev) {
 	struct uinput_token *t = (void *) tkn;
@@ -186,12 +167,7 @@ int uinput_create_new_device(struct uinput_tkn *tkn,
 	return 0;
 }
 
-/*
- * uinput_destroy
- * @tkn: the library token created by uinput_open
- *
- * It destroys the device associated to the token
- */
+
 int uinput_destroy(struct uinput_tkn *tkn) {
 	struct uinput_token *t = (void *) tkn;
 	int err;
@@ -208,42 +184,21 @@ int uinput_destroy(struct uinput_tkn *tkn) {
 	return err;
 }
 
-/*
- * uinput_enable_event
- * @tkn: the library token created by uinput_open
- * @type: type of event to enable (read input.h for the list)
- *
- * It enables a type of event
- */
+
 int uinput_enable_event(struct uinput_tkn *tkn, int type) {
 	struct uinput_token *t = (void *) tkn;
 
 	return ioctl(t->fd, UI_SET_EVBIT, type);
 }
 
-/*
- * uinput_enable_event
- * @tkn: the library token created by uinput_open
- * @type: type of event to set (read input.h for the list)
- * @code: code of the event
- *
- * It sets a valid event handled by the device that you are creating
- */
+
 int uinput_set_valid_event(struct uinput_tkn *tkn, int type, int code) {
 	struct uinput_token *t = (void *) tkn;
 
 	return ioctl(t->fd, type, code);
 }
 
-/*
- * uinput_set_valid_events
- * @tkn: the library token created by uinput_open
- * @ev: list of events
- * @n: number of events in the list
- *
- * It sets valid events handled by the device that you are creating. It is like
- * uinput_set_valid_event() but it operates on an array of events
- */
+
 int uinput_set_valid_events(struct uinput_tkn *tkn, struct input_event *ev,
 		unsigned int n) {
 	int i, err = 0;
@@ -257,13 +212,7 @@ int uinput_set_valid_events(struct uinput_tkn *tkn, struct input_event *ev,
 	return err;
 }
 
-/*
- * uinput_send_event
- * @tkn: the library token created by uinput_open
- * @event: the event to send to device
- *
- * It sends an event to the device
- */
+
 int uinput_send_event(struct uinput_tkn *tkn, struct input_event *ev) {
 	struct uinput_token *t = (void *) tkn;
 
@@ -277,14 +226,7 @@ int uinput_send_event(struct uinput_tkn *tkn, struct input_event *ev) {
 	return 0;
 }
 
-/*
- * uinput_send_events
- * @tkn: the library token created by uinput_open
- * @event: list of events to send to device
- * @n: number of events in the list
- *
- * It sends a list of events to the device
- */
+
 int uinput_send_events(struct uinput_tkn *tkn, struct input_event *event,
 		       unsigned int n, int do_sync) {
 	int i, err = 0;
@@ -313,13 +255,7 @@ int uinput_send_events(struct uinput_tkn *tkn, struct input_event *event,
 }
 
 
-/*
- * uinput_get_event_no
- * @tkn: the library token created by uinput_open
- *
- * It returns the event number associated to the uinput device. It returns -1
- * if the library was not able to determinate the input device number.
- */
+
 int uinput_get_input_no(struct uinput_tkn *tkn)
 {
 	struct uinput_token *t = (void *) tkn;
@@ -327,13 +263,7 @@ int uinput_get_input_no(struct uinput_tkn *tkn)
 	return t->input_no;
 }
 
-/*
- * uinput_get_event_no
- * @tkn: the library token created by uinput_open
- *
- * It returns the event number associated to the uinput device. It returns -1
- * if the library was not able to determinate the event device number
- */
+
 int uinput_get_event_no(struct uinput_tkn *tkn)
 {
 	struct uinput_token *t = (void *) tkn;
@@ -341,14 +271,7 @@ int uinput_get_event_no(struct uinput_tkn *tkn)
 	return t->event_no;
 }
 
-/*
- * uinput_get_event_path
- * @tkn: the library token created by uinput_open
- *
- * It returns the string of the char device event associated to the uinput
- * device. It returns NULL if the library was not able to determinate the
- * path to the event char device.
- */
+
 char *uinput_get_event_path(struct uinput_tkn *tkn)
 {
 	struct uinput_token *t = (void *) tkn;
