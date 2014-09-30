@@ -1,16 +1,20 @@
 LIB = ..
 
 CFLAGS = -Wall -ggdb -O2 -I$(LIB)/
-LDFLAGS = -static -L$(LIB)/ -luinput
+LDFLAGS = -L$(LIB)/ -luinput
 
 DEMOS := keyboard_demo
+DEMOS += keyboard_demo_shared
 
 all: demo
 
 demo: $(DEMOS)
 
-%: %.c $(LIB)/libuinput.a
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+keyboard_demo: keyboard_demo.c
+	$(CC) $(CFLAGS) $^ -o $@ -static $(LDFLAGS)
+
+keyboard_demo_shared: keyboard_demo.c
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) -ldl
 
 clean:
 	rm -f $(DEMOS) *.o *~
