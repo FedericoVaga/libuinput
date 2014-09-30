@@ -1,8 +1,8 @@
-LIB = libuinput.so
+LIB = libuinput.a
 LOBJ := libuinput.o
 
-CFLAGS = -fPIC -Wall -ggdb -O2 -I.
-LDFLAGS = -L. -luinput -shared
+CFLAGS = -Wall -ggdb -O2 -I.
+LDFLAGS = -L. -luinput
 
 modules all: lib
 
