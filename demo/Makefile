@@ -1,7 +1,7 @@
 LIB = ..
 
 CFLAGS = -Wall -ggdb -O2 -I$(LIB)/
-LDFLAGS = -static -L$(LIB)/ -luinput
+LDFLAGS = -L$(LIB)/ -luinput
 
 DEMOS := keyboard_demo
 
