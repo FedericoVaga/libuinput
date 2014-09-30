@@ -1,12 +1,13 @@
 LIB = libuinput.a
+LIBS = libuinput.so
 LOBJ := libuinput.o
 
-CFLAGS = -Wall -ggdb -O2 -I.
+CFLAGS = -fPIC -Wall -ggdb -O2 -I.
 LDFLAGS = -L. -luinput
 
 modules all: lib
 
-lib: $(LIB)
+lib: $(LIB) $(LIBS)
 
 
 %: %.c $(LIB)
@@ -14,6 +15,9 @@ lib: $(LIB)
 
 $(LIB): $(LOBJ)
 	ar -c -s -r $@ $^
+
+$(LIBS): $(LOBJ)
+	$(CC) -shared -o $@ $^
 
 clean:
 	rm -f $(LIB) .depend *.o *~
