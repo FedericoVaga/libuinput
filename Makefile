@@ -2,7 +2,7 @@ LIB = libuinput.a
 LIBS = libuinput.so
 LOBJ := libuinput.o
 
-CFLAGS = -fPIC -Wall -ggdb -O2 -I.
+CFLAGS = -fPIC -Wall -Werror -ggdb -O2 -I.
 LDFLAGS = -L. -luinput
 
 modules all: lib

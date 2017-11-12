@@ -1,6 +1,6 @@
 LIB = ..
 
-CFLAGS = -Wall -ggdb -O2 -I$(LIB)/
+CFLAGS = -Wall -Werror -ggdb -O2 -I$(LIB)/
 LDFLAGS = -L$(LIB)/ -luinput
 
 DEMOS := keyboard_demo
