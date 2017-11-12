@@ -9,18 +9,3 @@ to understand and hide some complexity. The uinput interface is pretty simple,
 so this library does not simplify nothing; the aim of this library is to hide
 the ioctl() interface to the user of this library and provide some common
 functions.
-
-= = = = Change Log = = = =
-- - libuinput 0.2 - -
- Thanks to the question of Stack Overflow, I improved my library with the
- answer that I gave on the website:
- http://stackoverflow.com/questions/15623442/how-do-i-determine-the-files-corresponding-to-a-uinput-device/15637288
-
- * The library determines the associated event char device of the uinput
-   device just created
- * Export function to retrieve information about the device created:
-     + event device number
-     + char device path to the event device in /dev/input/
-     + input device number
-- - libuinput 0.1 - -
- * Create the first draft of the library
